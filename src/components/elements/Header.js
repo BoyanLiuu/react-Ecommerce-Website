@@ -2,11 +2,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { ReactComponent as Logo } from '../../crown.svg';
+import { ReactComponent as Logo } from '../../misc/crown.svg';
 import { auth } from '../../firebase/firebase.utils';
 import '../styles/header.styles.scss';
+import CartIcon from './CartIcon';
+import CartDropdown from './CartDropdown';
+import { createStructuredSelector } from 'reselect';
+import { selectCartHidden } from '../../redux/cart/cart.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-const Header = ({currentUser}) => (
+
+//in this component, we accept 2 state
+const Header = ({currentUser,hidden}) => (
   <div className='header'>
     <Link className='logo-container' to='/'>
       <Logo className='logo' />
@@ -24,15 +31,17 @@ const Header = ({currentUser}) => (
 
       }
 
-
+      <CartIcon/> 
 
     </div>
+    { hidden ? null :<CartDropdown/>}    
   </div>
 );
 
 //the state is passed from root reducer, which come from user.reducer
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden
 });
 //the first parameter could have two field, it is function that let us access the state
 //use connect whenever we need property from reducer
