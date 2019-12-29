@@ -1,11 +1,11 @@
 import React from 'react';
 import Directory from '../elements/Directory';
-import '../styles/homepage.styles.scss'
+import { HomePageContainer} from '../styles/homepage.styles'
 //only Homepage have history props passed in by route
 const HomePage = () => (
-  <div className= 'hompage'>
+  <HomePageContainer>
   <Directory/>
-  </div>   
+  </HomePageContainer>   
 );
 
 
